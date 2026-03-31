@@ -3,8 +3,9 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <form id="createForm" method="POST">
-            {% csrf_token %} 
+        <!-- 게시글 등록 -->
+        <form id="createForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="card mb-3">
                 <div class="card-header">
                     <span class="text-danger">*</span> 표시는 필수항목입니다.
@@ -56,6 +57,11 @@
                         </div>
                         {% endif %}
                     </div>
+
+                    <div>
+                        <label for="uploadFile" class="form-label">첨부 파일</label>
+                        <input type="file" id="uploadFile" name="uploadFile" class="form-control" accept="image/*">
+                    </div>
                 </div>
             </div>
 
@@ -64,6 +70,149 @@
                 <a href="{% url 'posts:list' %}" class="btn btn-secondary">취소</a>
             </div>
         </form>
+        <!-- // 게시글 등록 -->
         </div>
 </div>
+{% endblock %}
+
+{% comment %}
+{% block script %}
+<script>
+    // $(document).ready(function() {
+    //     // 게시글 폼 검증
+    //     $('#createForm').submit(function(event) {
+    //         // 기본 제출 동작 방지 (검증을 통과해야만 제출되도록 함)
+    //         event.preventDefault();
+
+    //         if ($('#title').val() == '') {
+    //             alert('제목을 입력하세요.');
+    //             $('#title').focus();
+    //             return false;
+    //         }
+    //         if ($('#content').val() == '') {
+    //             alert('내용을 입력하세요.');
+    //             $('#content').focus();
+    //             return false;
+    //         }
+    //         if ($('#username').val() == '') {
+    //             alert('작성자를 입력하세요.');
+    //             $('#username').focus();
+    //             return false;
+    //         }
+    //         if ($('#password').val() == '') {
+    //             alert('비밀번호를 입력하세요.');
+    //             $('#password').focus();
+    //             return false;
+    //         }
+
+    //         // 모든 검증을 통과하면 폼을 실제로 제출
+    //         return true; 
+    //     });
+    // });
+</script>
+{% endblock %}
+{% endcomment %}
+
+{% block script %}
+<script>
+    $(document).ready(function() {
+
+        // TinyMCE 초기화
+        tinymce.init({
+            selector: '#content',
+            language: 'ko_KR',
+            // TinyMCE 필수 입력 설정
+            setup: function(editor) {
+                editor.on('change', function() {
+                    editor.save(); // 에디터 내용을 textarea에 반영
+                    validateContent(); // 컨텐츠 유효성 검사 실행
+                });
+            }
+        });
+
+        // 컨텐츠 유효성 검사 함수
+        function validateContent() {
+            var content = tinymce.get('content').getContent();
+            // HTML 태그 제거하여 순수 텍스트만 추출
+            var textContent = $('<div>').html(content).text(); 
+
+            if (textContent.length < 2) {
+                $('#content').addClass('is-invalid');
+                $('#content-error').remove();
+                $('#content').closest('.mb-3').append('<div id="content-error" class="invalid-feedback">내용은 최소 2자 이상 입력하세요.</div>');
+                return false;
+            } else if (textContent.length > 1000) {
+                $('#content').addClass('is-invalid');
+                $('#content-error').remove();
+                $('#content').closest('.mb-3').append('<div id="content-error" class="invalid-feedback">내용은 최대 1000자 이하로 입력하세요.</div>');
+                return false;
+            } else {
+                $('#content').removeClass('is-invalid').addClass('is-valid');
+                $('#content-error').remove();
+                return true;
+            }
+        }
+
+        // 게시글 폼 검증 (jQuery Validation Plugin)
+        $('#createForm').validate({
+            rules: {
+                title: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 100
+                },
+                content: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 1000
+                },
+                username: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 10
+                },
+                password: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 20
+                }
+            },
+            messages: {
+                title: {
+                    required: '제목을 입력하세요.',
+                    minlength: '제목은 최소 2자 이상 입력하세요.',
+                    maxlength: '제목은 최대 100자 이하로 입력하세요.'
+                },
+                content: {
+                    required: '내용을 입력하세요.',
+                    minlength: '내용은 최소 2자 이상 입력하세요.',
+                    maxlength: '내용은 최대 1000자 이하로 입력하세요.'
+                },
+                username: {
+                    required: '작성자를 입력하세요.',
+                    minlength: '작성자는 최소 2자 이상 입력하세요.',
+                    maxlength: '작성자는 최대 10자 이하로 입력하세요.'
+                },
+                password: {
+                    required: '비밀번호를 입력하세요.',
+                    minlength: '비밀번호는 최소 4자 이상 입력하세요.',
+                    maxlength: '비밀번호는 최대 20자 이하로 입력하세요.'
+                }
+            },
+            errorClass: 'is-invalid',
+            validClass: 'is-valid',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.mb-3').append(error);
+            },
+            submitHandler: function(form) {
+                //폼 제출 전 내용 검증
+                if(validateContent()){
+                    form.submit();
+                }
+                return false;
+            }
+        });
+    });
+</script>
 {% endblock %}
