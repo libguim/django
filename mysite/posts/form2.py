@@ -5,12 +5,13 @@ from .models import Posts
 class PostUpdateForm(forms.ModelForm):
     title = forms.CharField(required=False)
     content = forms.CharField(required=False)
-    username = forms.CharField(required=False)
-    password = forms.CharField(required=False)
+    # username = forms.CharField(required=False)
+    # password = forms.CharField(required=False)
 
     class Meta:
         model = Posts
-        fields = ['title', 'content', 'password', 'username']
+        # fields = ['title', 'content', 'password', 'username']
+        fields = ['title', 'content']
 
     # 제목 검증
     def clean_title(self):
@@ -31,23 +32,23 @@ class PostUpdateForm(forms.ModelForm):
         return content
 
     # 비밀번호 검증
-    def clean_password(self):
-        password = self.cleaned_data['password']
-        if not password:
-            raise forms.ValidationError("비밀번호를 입력해주세요.")
-        if len(password) < 4:
-            raise forms.ValidationError("비밀번호는 최소 4자 이상 입력해주세요.")
-        if len(password) > 20:
-            raise forms.ValidationError("비밀번호는 최대 20자 이하로 입력해주세요.")
-        return password
+    # def clean_password(self):
+    #     password = self.cleaned_data['password']
+    #     if not password:
+    #         raise forms.ValidationError("비밀번호를 입력해주세요.")
+    #     if len(password) < 4:
+    #         raise forms.ValidationError("비밀번호는 최소 4자 이상 입력해주세요.")
+    #     if len(password) > 20:
+    #         raise forms.ValidationError("비밀번호는 최대 20자 이하로 입력해주세요.")
+    #     return password
 
     # 글쓴이 검증
-    def clean_username(self):
-        username = self.cleaned_data['username']
-        if not username:
-            raise forms.ValidationError("글쓴이를 입력해주세요.")
-        if len(username) < 2:
-            raise forms.ValidationError("글쓴이는 최소 2자 이상 입력해주세요.")
-        if len(username) > 10:
-            raise forms.ValidationError("글쓴이는 최대 10자 이하로 입력해주세요.")
-        return username
+    # def clean_username(self):
+    #     username = self.cleaned_data['username']
+    #     if not username:
+    #         raise forms.ValidationError("글쓴이를 입력해주세요.")
+    #     if len(username) < 2:
+    #         raise forms.ValidationError("글쓴이는 최소 2자 이상 입력해주세요.")
+    #     if len(username) > 10:
+    #         raise forms.ValidationError("글쓴이는 최대 10자 이하로 입력해주세요.")
+    #     return username

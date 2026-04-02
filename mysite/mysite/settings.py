@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'posts',
     'tinymce',
     'accounts',
+    'comments',
+    'users',
 ]
 
 MIDDLEWARE = [

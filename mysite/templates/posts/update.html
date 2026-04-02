@@ -32,7 +32,7 @@
                         {% endif %}
                     </div>
 
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="username" class="form-label">글쓴이 <span class="text-danger">*</span></label>
                         <input type="text" id="username" name="username" class="form-control" placeholder="글쓴이를 입력하세요."
                                value="{{ form.username.value|default_if_none:'' }}">
@@ -41,9 +41,9 @@
                             {{ form.username.errors.0 }}
                         </div>
                         {% endif %}
-                    </div>
+                    </div> -->
 
-                    <div>
+                    <!-- <div>
                         <label for="password" class="form-label">비밀번호 <span class="text-danger">*</span></label>
                         <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요.">
                         {% if form.password.errors %}
@@ -51,7 +51,7 @@
                             {{ form.password.errors.0 }}
                         </div>
                         {% endif %}
-                    </div>
+                    </div> -->
 
                     {% if form.instance.filename %}
                     <div class="mb-3">
@@ -179,16 +179,16 @@
                     minlength: 2,
                     maxlength: 1000
                 },
-                username: {
-                    required: true,
-                    minlength: 2,
-                    maxlength: 10
-                },
-                password: {
-                    required: true,
-                    minlength: 4,
-                    maxlength: 20
-                }
+                // username: {
+                //     required: true,
+                //     minlength: 2,
+                //     maxlength: 10
+                // },
+                // password: {
+                //     required: true,
+                //     minlength: 4,
+                //     maxlength: 20
+                // }
             },
             messages: {
                 title: {
@@ -201,16 +201,16 @@
                     minlength: '내용은 최소 2자 이상 입력하세요.',
                     maxlength: '내용은 최대 1000자 이하로 입력하세요.'
                 },
-                username: {
-                    required: '작성자를 입력하세요.',
-                    minlength: '작성자는 최소 2자 이상 입력하세요.',
-                    maxlength: '작성자는 최대 10자 이하로 입력하세요.'
-                },
-                password: {
-                    required: '비밀번호를 입력하세요.',
-                    minlength: '비밀번호는 최소 4자 이상 입력하세요.',
-                    maxlength: '비밀번호는 최대 20자 이하로 입력하세요.'
-                }
+                // username: {
+                //     required: '작성자를 입력하세요.',
+                //     minlength: '작성자는 최소 2자 이상 입력하세요.',
+                //     maxlength: '작성자는 최대 10자 이하로 입력하세요.'
+                // },
+                // password: {
+                //     required: '비밀번호를 입력하세요.',
+                //     minlength: '비밀번호는 최소 4자 이상 입력하세요.',
+                //     maxlength: '비밀번호는 최대 20자 이하로 입력하세요.'
+                // }
             },
             errorClass: 'is-invalid',
             validClass: 'is-valid',

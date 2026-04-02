@@ -64,7 +64,7 @@
         <!-- // 페이지 제목 -->
 
         <!-- 메시지 -->
-        {% if messages %}
+        <!-- {% if messages %}
             <div class="row">
                 <div class="{% if message_class %}{{ message_class }}{% else %}col-12{% endif %}">
                     {% for message in messages %}
@@ -88,7 +88,19 @@
                     {% endfor %}
                 </div>
             </div>
-        {% endif %}
+        {% endif %} -->
+
+        <!-- {% if messages %}
+            <div class="row justify-content-center"> <div class="col-4 {% if message_class %}{{ message_class }}{% endif %}">
+                    {% for message in messages %}
+                        <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %} -->
         <!-- // 메시지 -->
          
         <!-- 페이지 내용 -->
@@ -111,11 +123,19 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
     
-
     <!-- Static JS -->
     <script src="{% static 'script.js' %}"></script>
     <script>
-        /* 자바스크립트 */
+        $(document).ready(function(){
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", 
+                            document.querySelector('[name=csrfmiddlewaretoken]').value);
+                    }
+                }
+            });
+        });
     </script>
     {% block script %}{% endblock %}
 </body>

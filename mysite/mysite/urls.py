@@ -20,7 +20,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("posts/", include('posts.urls')),
+    # path("posts/", include('posts.urls')),
+    path("", include('posts.urls')), # posts 앱의 URL 패턴을 루트 URL로 포함
     path("tinymce/", include('tinymce.urls')),
     path("auth/", include('accounts.urls')),
+    path("comments/", include('comments.urls')),
+    path("users/", include('users.urls')),
 ]
