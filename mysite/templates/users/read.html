@@ -1,0 +1,62 @@
+{% extends "../base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-4 mx-auto">
+        <div class="card mb-3">
+            <h5 class="card-header text-primary">
+                <strong>사용자 정보</strong>
+            </h5>
+            <div class="card-body">
+                <div class="mb-3">
+                    아이디: {{ user.username }}
+                </div>
+                <hr>
+                <div class="mb-3">
+                    이름: {{ user.first_name }}
+                </div>
+                <hr>
+                <div class="mb-3">
+                    이메일: {{ user.email }}
+                </div>
+            </div>
+        </div>
+        <div>
+            <a href="{% url 'users:list' %}" class="btn btn-primary">사용자 목록</a>
+            {% if request.user.is_superuser %}
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">사용자 삭제</button>
+            {% endif %}
+        </div>
+        </div>
+</div>
+
+<!-- 사용자 삭제 모달 -->
+{% if request.user.is_superuser %}
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="deleteForm" action="{% url 'users:delete' user_id=user.id %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-danger" id="deleteModalLabel">
+                        <strong>사용자 삭제</strong>
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <p class="text-danger">삭제된 데이터는 복구할 수 없습니다.</p>
+                        <p>사용자를 삭제하시겠습니까?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-danger">사용자 삭제</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">삭제 취소</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+<!-- // 사용자 삭제 모달 -->
+{% endblock %}
