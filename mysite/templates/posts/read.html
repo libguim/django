@@ -317,7 +317,6 @@
         // 댓글 삭제 확인
         $('#deleteCommentModal').on('click', '.btn-comment-delete-confirm', function() {
             $.ajax({
-
                 url: '{% url "comments:delete" comment_id=0 %}',
                 type: 'POST',
                 data: {

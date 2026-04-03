@@ -62,7 +62,7 @@ def delete_user(request, user_id):
     user=get_object_or_404(User, id=user_id)
     if user.is_superuser:
         messages.error(request, '관리자는 삭제할 수 없습니다.')
-        return redirect('users:read', user_id=user_id)
+        return redirect('users:read', user_id=user.id)
     
     user.delete()
     return redirect('users:list')

@@ -5,8 +5,8 @@ from .models import Posts
 class PostCreateForm(forms.ModelForm):
     title = forms.CharField(required=False)
     content = forms.CharField(required=False)
-    username = forms.CharField(required=False)
-    password = forms.CharField(required=False)
+    # username = forms.CharField(required=False)
+    # password = forms.CharField(required=False)
 
     class Meta:
         model = Posts

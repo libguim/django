@@ -128,6 +128,7 @@
     <script src="{% static 'script.js' %}"></script>
     <script>
         $(document).ready(function(){
+            // AJAX 요청 시 CSRF 토큰을 헤더에 자동으로 포함시키도록 설정
             $.ajaxSetup({
                 beforeSend: function(xhr, settings) {
                     if (!this.crossDomain) {
