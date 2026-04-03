@@ -98,7 +98,7 @@ def get_profile(request):
 # 프로필 수정
 @login_required(login_url='auth:login')
 def update_profile(request):
-    form = ProfileUpdateForm(instance=request.user)
+    form = ProfileUpdateForm(instance=request.user) # 프로필 수정 폼 객체 생성, instance 매개변수로 기존 사용자 데이터를 전달하여 폼 초기화
 
     if request.method == 'POST':
         form = ProfileUpdateForm(request.POST, instance=request.user)
